@@ -1,0 +1,6 @@
+<resources>
+    <style name="AppTheme.ThemeToolbar">
+        <item name="android:textColorSecondary">@color/color_mint_light</item>
+    </style>
+
+</resources>

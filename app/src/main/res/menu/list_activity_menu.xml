@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/insert_deal"
+        android:title="@string/insert_deal_text"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/log_out_deal"
+        android:title="@string/log_out_main_menu"
+        app:showAsAction="never"/>
+</menu>

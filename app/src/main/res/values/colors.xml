@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_sailor_blue">#00203F</color>
+    <color name="color_sailor_blue_light">#31476A</color>
+    <color name="color_sailor_blue_dark">#00001A</color>
+    <color name="color_mint">#ADEFD1</color>
+    <color name="color_mint_light">#E0FFFF</color>
+    <color name="color_mint_dark">#7CBCA0</color>
+</resources>

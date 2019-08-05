@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_sailor_blue</item>
+        <item name="colorPrimaryVariant">@color/color_sailor_blue_dark</item>
+        <item name="colorSecondary">@color/color_mint</item>
+        <item name="colorSecondaryVariant">@color/color_mint_dark</item>
+        <item name="colorOnPrimary">@color/color_mint_light</item>
+        <item name="colorOnSecondary">@color/color_sailor_blue_light</item>
+        <item name="actionMenuTextColor">@color/color_mint_light</item>
+        <item name="android:statusBarColor">@color/color_sailor_blue_dark</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/SmallComponentsShape</item>
+        <item name="shapeAppearanceMediumComponent">@style/MediumShapeAppearance</item>
+        <item name="shapeAppearanceLargeComponent">@style/LargeShapeAppearance</item>
+    </style>
+</resources>
