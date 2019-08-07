@@ -231,6 +231,7 @@ public class DealActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Exception e) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "Imsge failed to load", Toast.LENGTH_LONG).show();
                     }
                 });
