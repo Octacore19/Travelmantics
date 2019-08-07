@@ -1,7 +1,5 @@
 package com.chegsmania.travelmantics.utils;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 

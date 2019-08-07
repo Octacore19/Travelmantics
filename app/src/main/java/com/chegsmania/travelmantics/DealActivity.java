@@ -38,6 +38,7 @@ import static com.chegsmania.travelmantics.utils.FirebaseUtils.mStorageReference
 public class DealActivity extends AppCompatActivity {
 
     private static final int RESULT = 100;
+    private static final String LOG_TAG = DealActivity.class.getSimpleName();
     private TextInputEditText dealTitleText, dealPriceText, dealDescriptionText;
     private ImageView imageView;
     private DatabaseReference mDatabaseReference;
@@ -177,29 +178,35 @@ public class DealActivity extends AppCompatActivity {
         deal.setDescription(dealDescriptionText.getEditableText().toString());
         if (deal.getDealId() == null) {
             mDatabaseReference.push().setValue(deal);
+            Log.i(LOG_TAG, "New TravelDeal object is created and stored in the database");
         } else {
             mDatabaseReference.child(deal.getDealId()).setValue(deal);
+            Log.i(LOG_TAG, "The TravelDeal object" + deal + " has been successfully updated");
         }
     }
 
     private void deleteDeal() {
         if (deal == null) {
             Toast.makeText(this, "There is nothing to delete", Toast.LENGTH_LONG).show();
+            Log.w(LOG_TAG, "There is no object to delete");
         }
+        mDatabaseReference.child(deal.getDealId()).removeValue();
+        Log.i(LOG_TAG, "Deal object successfully deleted");
+        Toast.makeText(getApplicationContext(), "Deal successfully deleted", Toast.LENGTH_LONG).show();
+
         if (deal != null && deal.getImageName() != null && !deal.getImageName().isEmpty()) {
             StorageReference reference = mStorageReference.child(deal.getImageName());
             reference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-
+                    Log.i(LOG_TAG, "Image successfully deleted");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    Log.i(LOG_TAG, "Error: " + e.getMessage());
                 }
             });
-            mDatabaseReference.child(deal.getDealId()).removeValue();
         }
     }
 
@@ -213,6 +220,5 @@ public class DealActivity extends AppCompatActivity {
         Picasso.get()
                 .load(url)
                 .into(imageView);
-
     }
 }
