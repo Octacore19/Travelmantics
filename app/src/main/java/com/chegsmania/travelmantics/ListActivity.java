@@ -59,6 +59,11 @@ public class ListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         if (isAdmin){
             menu.findItem(R.id.insert_deal).setVisible(true);
         } else {
@@ -72,6 +77,7 @@ public class ListActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.insert_deal:
                 startActivity(new Intent(this, DealActivity.class));
+                finish();
                 return true;
             case R.id.log_out_deal:
                 AuthUI.getInstance()
@@ -82,6 +88,7 @@ public class ListActivity extends AppCompatActivity {
                             }
                         });
                 detachStateListener();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

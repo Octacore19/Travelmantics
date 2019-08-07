@@ -27,7 +27,7 @@ public class FirebaseUtils {
     private static FirebaseDatabase mFirebaseDatabase;
     public static DatabaseReference mDatabaseReference;
     private static FirebaseUtils mFirebaseUtils;
-    public static FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth;
     private static FirebaseAuth.AuthStateListener mAuthListener;
     private static FirebaseStorage mFirebaseStorage;
     public static StorageReference mStorageReference;
@@ -116,7 +116,7 @@ public class FirebaseUtils {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public static void connectStorage(){
+    private static void connectStorage(){
         mFirebaseStorage = FirebaseStorage.getInstance();
         mStorageReference = mFirebaseStorage.getReference().child("deals_pictures");
     }

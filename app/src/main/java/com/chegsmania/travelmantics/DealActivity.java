@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 import static com.chegsmania.travelmantics.utils.FirebaseUtils.isAdmin;
 import static com.chegsmania.travelmantics.utils.FirebaseUtils.mStorageReference;
@@ -62,7 +65,7 @@ public class DealActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(intent.createChooser(intent, "Insert Picture"), RESULT);
+                startActivityForResult(Intent.createChooser(intent, "Insert Picture"), RESULT);
             }
         });
     }
@@ -79,11 +82,14 @@ public class DealActivity extends AppCompatActivity {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (task.isSuccessful()) {
-                            String imageName = task.getResult().getStorage().getPath();
+                            String fullPath = Objects.requireNonNull(task.getResult()).getStorage().getPath();
+                            String[] parts = fullPath.split("/");
+                            Log.d("Parts Count", String.valueOf(parts.length));
+                            String imageName = parts[2];
                             deal.setImageName(imageName);
                             return ref.getDownloadUrl();
                         } else
-                            throw task.getException();
+                            throw Objects.requireNonNull(task.getException());
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
@@ -121,6 +127,11 @@ public class DealActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deal_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         if (isAdmin) {
             menu.findItem(R.id.save_deal).setVisible(true);
             menu.findItem(R.id.delete_deal).setVisible(true);
@@ -172,9 +183,8 @@ public class DealActivity extends AppCompatActivity {
     }
 
     private void deleteDeal() {
-        if (deal != null) {
-            mDatabaseReference.child(deal.getDealId()).removeValue();
-            Toast.makeText(this, "Deal successfully deleted", Toast.LENGTH_LONG).show();
+        if (deal == null) {
+            Toast.makeText(this, "There is nothing to delete", Toast.LENGTH_LONG).show();
         }
         if (deal != null && deal.getImageName() != null && !deal.getImageName().isEmpty()) {
             StorageReference reference = mStorageReference.child(deal.getImageName());
@@ -189,6 +199,7 @@ public class DealActivity extends AppCompatActivity {
 
                 }
             });
+            mDatabaseReference.child(deal.getDealId()).removeValue();
         }
     }
 
@@ -199,12 +210,8 @@ public class DealActivity extends AppCompatActivity {
     }
 
     private void showImage(String url) {
-        int width = Resources.getSystem().getDisplayMetrics().widthPixels;
-        int height = (width * 2 / 3);
         Picasso.get()
                 .load(url)
-                /*.resize(width, height)
-                .centerCrop()*/
                 .into(imageView);
 
     }
